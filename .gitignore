@@ -1,0 +1,4 @@
+__pycache__/
+*/__pycache__/
+database/nations.json
+database/users.json
