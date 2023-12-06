@@ -1,4 +1,5 @@
 from database import handler
+from users import User
 
 
 class Nation:
@@ -16,8 +17,13 @@ class Nation:
         return handler.get(Nation.TABLE)
 
     @staticmethod
+    def users(name: str):
+        users = User.all()
+        return [user for user in users if user["nation"] == name]
+
+    @staticmethod
     def find(name: str):
-        return handler.find(Nation.TABLE, name)
+        return handler.first(Nation.TABLE, name)
 
     def extract(self):
         return {

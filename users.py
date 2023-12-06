@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import nations
 from database import handler
 
 

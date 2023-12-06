@@ -18,8 +18,8 @@ if __name__ == "__main__":
     if first == 1:
         print("----- NATIONS -----")
         print("-- 1. Index")
-        print("-- 2. Show")
-        print("-- 3. Create")
+        print("-- 2. Create")
+        print("-- 3. Show Users")
 
         second = int(input("Enter: "))
 
@@ -27,11 +27,17 @@ if __name__ == "__main__":
             print("----- ALL NATIONS -----")
             bprint(Nation.all())
 
-        elif second == 3:
+        elif second == 2:
             print("----- CREATE NATION -----")
             name = input("Name: ")
             ip = input("IP: ")
             Nation(name, ip).save()
+
+        elif second == 3:
+            print("----- SHOW NATION'S USERS -----")
+            char = input("Nation: ")
+            users = Nation.users(char)
+            bprint(users)
 
     elif first == 2:
         print("----- USERS -----")
