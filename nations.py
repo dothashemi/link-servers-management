@@ -1,3 +1,5 @@
+from termcolor import colored
+
 from database import handler
 from users import User
 
@@ -28,10 +30,10 @@ class Nation:
     @classmethod
     def create(cls, name, ip):
         if cls.find(name):
-            return "nation exists!"
+            return colored("ERROR: nation exists!", "red")
 
         cls(name, ip).save()
-        return f"{name} nation created!"
+        return colored(f"{name} nation created!", "green")
 
     def extract(self):
         return {
