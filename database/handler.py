@@ -7,12 +7,18 @@ BASE = "database"
 
 @decorators.validation
 def get(table: str):
+    """
+    get all data from json file
+    """
     with open(f"{BASE}/{table}.json", "r") as db:
         return json.load(db)[table]
 
 
 @decorators.validation
 def first(table: str, name: str):
+    """
+    get one data from json file based on the name key
+    """
     with open(f"{BASE}/{table}.json", "r") as db:
         data = json.load(db)[table]
 
@@ -25,13 +31,12 @@ def first(table: str, name: str):
 
 @decorators.validation
 def store(table: str, item: dict):
+    """
+    append new data to json file
+    """
     tmp = get(table)
     all = tmp if tmp is not None else list()
     all.append(item)
-
-    print(f"### {tmp}")
-    print(f"### {item}")
-    print(f"### {all}")
 
     with open(f"{BASE}/{table}.json", "w") as db:
         db.write(json.dumps({table: all}))

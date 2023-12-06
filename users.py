@@ -1,40 +1,42 @@
 from datetime import datetime
-import nations
 
+import nations
 from database import handler
 
 
-TABLE = "users"
+class User:
+    TABLE = "users"
 
+    def __init__(self, nation, name, password, onlines, price, tag, start):
+        self.nation = nation
+        self.name = name
+        self.password = password
+        self.onlines = onlines
+        self.price = price
+        self.tag = tag
+        self.start = start
 
-def show(name: str):
-    return handler.first("users", name)
+    def __str__(self):
+        return self.name
 
+    @staticmethod
+    def all():
+        return handler.get(User.TABLE)
 
-def create():
-    nation = input("Enter Nation: ")
-    name = input("Enter Name: ")
-    password = input("Enter Password: ")
-    type = input("Enter Type: ")
-    users = int(input("Enter Online Users: "))
-    price = int(input("Enter Price: "))
-    tag = input("Enter Tag: ")
-    start = input("Enter Start Date: ")
+    @staticmethod
+    def find(name: str):
+        return handler.find(User.TABLE, name)
 
-    if not nations.find(nation):
-        print("Nation is Wrong!")
-        return None
+    def extract(self):
+        return {
+            "nation": self.nation,
+            "name": self.name,
+            "password": self.password,
+            "onlines": self.onlines,
+            "price": self.price,
+            "tag": self.tag,
+            "start": self.start,
+        }
 
-    return handler.store(
-        TABLE,
-        {
-            "nation": nation,
-            "name": name,
-            "password": password,
-            "type": type,
-            "users": users,
-            "price": price,
-            "tag": tag,
-            "start": start if start else datetime.now().strftime("%Y-%m-%d"),
-        },
-    )
+    def save(self):
+        return handler.store(User.TABLE, self.extract())

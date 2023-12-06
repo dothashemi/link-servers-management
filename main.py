@@ -1,5 +1,12 @@
-import users
-import nations
+from users import User
+from nations import Nation
+
+
+def bprint(data: list):
+    for item in data:
+        for key in item.keys():
+            print(f"{key}: {item[key]}")
+        print()
 
 
 if __name__ == "__main__":
@@ -15,17 +22,36 @@ if __name__ == "__main__":
         print("-- 3. Create")
 
         second = int(input("Enter: "))
-        if second == 3:
+
+        if second == 1:
+            print("----- ALL NATIONS -----")
+            bprint(Nation.all())
+
+        elif second == 3:
             print("----- CREATE NATION -----")
-            nations.create()
+            name = input("Name: ")
+            ip = input("IP: ")
+            Nation(name, ip).save()
 
     elif first == 2:
         print("----- USERS -----")
         print("-- 1. Index")
-        print("-- 2. Show")
+        print("-- 2. Find")
         print("-- 3. Create")
 
         second = int(input("Enter: "))
-        if second == 3:
+
+        if second == 1:
+            print("----- ALL USERS -----")
+            bprint(User.all())
+
+        elif second == 3:
             print("----- CREATE USER -----")
-            users.create()
+            nation = input("Nation: ")
+            name = input("Name: ")
+            password = input("Password: ")
+            onlines = int(input("Online Users: "))
+            price = int(input("Price: "))
+            tag = input("Tag: ")
+            start = input("Start Date: ")
+            User(nation, name, password, onlines, price, tag, start).save()

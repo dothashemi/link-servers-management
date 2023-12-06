@@ -1,24 +1,29 @@
 from database import handler
 
 
-TABLE = "nations"
+class Nation:
+    TABLE = "nations"
 
+    def __init__(self, name, ip):
+        self.name = name
+        self.ip = ip
 
-def index():
-    return handler.get(TABLE)
+    def __str__(self):
+        return self.name
 
+    @staticmethod
+    def all():
+        return handler.get(Nation.TABLE)
 
-def create():
-    name = input("Enter Name: ")
-    ip = input("Enter Current IP: ")
+    @staticmethod
+    def find(name: str):
+        return handler.find(Nation.TABLE, name)
 
-    return handler.store(TABLE, {"name": name, "ip": ip})
+    def extract(self):
+        return {
+            "name": self.name,
+            "ip": self.ip,
+        }
 
-
-def show(name: str):
-    return handler.first(TABLE, name)
-
-
-def find(name: str):
-    print(f"### {handler.first(TABLE, name)}")
-    return True if handler.first(TABLE, name) else False
+    def save(self):
+        return handler.store(Nation.TABLE, self.extract())
