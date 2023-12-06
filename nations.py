@@ -25,6 +25,14 @@ class Nation:
     def find(name: str):
         return handler.first(Nation.TABLE, name)
 
+    @classmethod
+    def create(cls, name, ip):
+        if cls.find(name):
+            return "nation exists!"
+
+        cls(name, ip).save()
+        return f"{name} nation created!"
+
     def extract(self):
         return {
             "name": self.name,

@@ -31,7 +31,7 @@ if __name__ == "__main__":
             print("----- CREATE NATION -----")
             name = input("Name: ")
             ip = input("IP: ")
-            Nation(name, ip).save()
+            print(Nation.create(name, ip))
 
         elif second == 3:
             print("----- SHOW NATION'S USERS -----")
