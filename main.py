@@ -1,43 +1,48 @@
-from users import User
-from nations import Nation
+import os
+
+from controllers.nations import NationController
+from controllers.users import UserController
 
 
-def bprint(data: list):
-    for item in data:
-        for key in item.keys():
-            print(f"{key}: {item[key]}")
-        print()
-
-
-if __name__ == "__main__":
+def menu():
+    os.system("clear")
     print("----- LINK SERVERS MANAGEMENT -----")
     print("-- 1. Nations")
     print("-- 2. Users")
+    print()
+    print("-- 0. Exit")
 
     first = int(input("Enter: "))
+    os.system("clear")
+
     if first == 1:
         print("----- NATIONS -----")
         print("-- 1. Index")
         print("-- 2. Create")
-        print("-- 3. Show Users")
+        print("-- 3. Show")
 
         second = int(input("Enter: "))
+        os.system("clear")
 
         if second == 1:
             print("----- ALL NATIONS -----")
-            bprint(Nation.all())
+            nations = NationController.index()
+            for nation in nations:
+                print(nation)
 
         elif second == 2:
             print("----- CREATE NATION -----")
             name = input("Name: ")
-            ip = input("IP: ")
-            print(Nation.create(name, ip))
+            tag = input("Tag: ")
+            print(NationController.create(**{"name": name, "tag": tag}))
 
         elif second == 3:
-            print("----- SHOW NATION'S USERS -----")
+            print("----- SHOW NATION -----")
             char = input("Nation: ")
-            users = Nation.users(char)
-            bprint(users)
+            nation, users = NationController.show(char)
+            print(nation)
+            for user in users:
+                print(user)
 
     elif first == 2:
         print("----- USERS -----")
@@ -46,18 +51,36 @@ if __name__ == "__main__":
         print("-- 3. Create")
 
         second = int(input("Enter: "))
+        os.system("clear")
 
         if second == 1:
             print("----- ALL USERS -----")
-            bprint(User.all())
+            users = UserController.index()
+            for user in users:
+                print(user)
 
         elif second == 3:
             print("----- CREATE USER -----")
             nation = input("Nation: ")
             name = input("Name: ")
             password = input("Password: ")
-            onlines = int(input("Online Users: "))
-            price = int(input("Price: "))
+            onlines = input("Online Users: ")
+            amount = input("Amount: ")
             tag = input("Tag: ")
             start = input("Start Date: ")
-            User(nation, name, password, onlines, price, tag, start).save()
+
+            user = UserController.create(
+                nation=nation,
+                name=name,
+                password=password,
+                onlines=onlines,
+                amount=amount,
+                tag=tag,
+                start=start,
+            )
+
+            print(user)
+
+
+if __name__ == "__main__":
+    menu()
